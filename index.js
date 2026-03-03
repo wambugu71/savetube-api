@@ -91,7 +91,7 @@ app.get('/', (req, res) => {
     res.json({
         status: true,
         creator: "Chamod Nimsara",
-        message: "SaveTube API is running on Vercel."
+        message: "SaveTube API is running."
     });
 });
 
@@ -113,5 +113,15 @@ app.get('/download', async (req, res) => {
     res.json(result);
 });
 
-// Vercel requires exporting the app
+// --- Server Setup ---
+
+// Start the server if running in Docker/locally
+const PORT = process.env.PORT || 3000;
+if (require.main === module) {
+    app.listen(PORT, () => {
+        console.log(`SaveTube API service is running on port ${PORT}`);
+    });
+}
+
+// Keep the export for Vercel compatibility
 module.exports = app;
